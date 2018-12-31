@@ -3,11 +3,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { GLOBAL } from '../../services/global';
+import { FollowService } from '../../services/follow.service';
+import { Follow } from '../../models/follow';
+
 
 @Component({
     selector: 'users',
     templateUrl:'./users.component.html',
-    providers: [UserService]
+    providers: [UserService, FollowService]
 })
 
 export class UsersComponent implements OnInit{
@@ -21,9 +24,10 @@ export class UsersComponent implements OnInit{
     public total;
     public pages;
     public users: User[];
+    public follows: Follow[];
     public status;
 
-    constructor(private _route: ActivatedRoute,private _router: Router,private _userService: UserService)
+    constructor(private _route: ActivatedRoute,private _router: Router,private _userService: UserService, private _followService:FollowService)
     {
         this.title = "Gente";
         this.url = GLOBAL.url;
@@ -40,6 +44,10 @@ export class UsersComponent implements OnInit{
         this._route.params.subscribe(params=>{
             let page = +params['page']; //se le pone "+" de lado izquierdo para castearlo a entero
             this.page = page;
+
+            if(!params['page']){
+                page = 1;
+            }
 
             if(!page){
                 page=1;
@@ -66,6 +74,11 @@ export class UsersComponent implements OnInit{
                     this.total = response.total;
                     this.users = response.users;
                     this.pages = response.pages;
+
+                    this.follows = response.users_following;
+
+                    console.log("log de this.follows: " + this.follows);
+
                     if(page > this.pages){
                         this._router.navigate(['/gente',1]);
                     }
@@ -77,6 +90,53 @@ export class UsersComponent implements OnInit{
 
                 if(errorMessage!=null){
                     this.status = "error";
+                }
+            }
+        );
+    }
+
+    public followUserOver;
+    mouseEnter(user_id){
+        this.followUserOver = user_id;
+    }
+
+    mouseLeave(user_id){
+        this.followUserOver = 0;
+    }
+
+    followUser(followed){
+        var follow = new Follow('',this.identity._id,followed);
+
+        this._followService.addFollow(this.token, follow).subscribe(
+            response=>{
+                if(!response.follow){
+                    this.status = 'error';
+                }else{
+                    this.status = 'success';
+                    this.follows.push(followed);
+                }
+            },
+            error =>{
+                var errorMessage = <any>error;
+                if(errorMessage !=null){
+                    this.status = 'error';
+                }
+            }
+        );
+    }
+
+    unfollowUser(followed){
+        this._followService.deleteFollow(this.token,followed).subscribe(
+            response=>{
+                var search = this.follows.indexOf(followed);
+                if(search !=-1){
+                    this.follows.splice(search,1);
+                }
+            },
+            error =>{
+                var errorMessage = <any>error;
+                if(errorMessage !=null){
+                    this.status = 'error';
                 }
             }
         );

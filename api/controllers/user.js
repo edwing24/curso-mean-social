@@ -276,6 +276,10 @@ function updateUser(req,res){
         return res.status(500).send('No tienes permisos para actualizar los datos');
     }
 
+    console.log("metodo updateUser de api");
+    console.log("UserId: " + userId);
+    console.log("req.user.sub: " + req.user.sub);
+
     User.find({ $or:[
                  {email: update.email.toLowerCase()},
                  {nick: update.nick.toLowerCase()}
@@ -322,12 +326,16 @@ function uploadImage(req,res){
         console.log('extension del archivo subido .' + file_ext);
         if(file_ext=='png' || file_ext=='jpg' || file_ext == 'jpeg' || file_ext=='gif'){
             console.log('entre al if ')
+
+            console.log("el userid es: " + userId);
             //actualizar doucumento de usuario logueado
-            User.findOneAndUpdate(userId,{image: file_name},{new:true},(err,userUpdated)=>{
+            User.findOneAndUpdate({"_id":userId},{image: file_name},{new:true},(err,userUpdated)=>{
                 if(err) return res.status(500).send({message:"Error en la petición"});
 
                 if(!userUpdated) return res.status(404).send({messsage:'No se ha podido actualizar el usuario'});
         
+                console.log("El userupdated es: " + userUpdated);
+
                 return res.status(200).send({user: userUpdated});
             });
         }

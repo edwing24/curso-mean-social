@@ -68,3 +68,41 @@
     border-radius: 5px;
     text-align:center;
 }
+
+.user-item .user-image{
+    width: 75px;
+    height: 75px;
+    border-radius :100px;
+    overflow: hidden; /*para ocultar lo sobrante*/
+    margin-right: 15px;
+}
+
+.user-item .user-image img{
+    height: auto;
+    width: 75px;
+}
+
+.user-item .user-name{
+    margin-top: 11px;
+}
+
+.user-item .user-name a{
+    font-weight: bold;
+    color:#000000;
+}
+
+/*.user-item .user-name a:hover{
+    color:red;
+}*/
+
+.user-item .user-name{
+    margin-top: 11px;
+}
+
+.user-item .user-name .nickname{
+    color:#969393;
+}
+
+.avatar-default{
+    width: 100% !important;
+}
