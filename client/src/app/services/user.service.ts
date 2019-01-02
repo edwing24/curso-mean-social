@@ -9,7 +9,7 @@ export class UserService{
     public url: string;
     public identity;
     public token;
-    public stats;
+    public stats = {};
 
     constructor(public _http: HttpClient){
         this.url = GLOBAL.url;
@@ -61,7 +61,10 @@ export class UserService{
     }
 
     getStats(){
-        let stats = localStorage.getItem('stats');
+        console.log("entrando al metodo getstats");
+        let stats = JSON.parse(localStorage.getItem('stats'));
+        console.log("esto trae stats: " + stats);
+
 
         if(stats!="undefined"){
             this.stats = stats;
@@ -73,6 +76,7 @@ export class UserService{
     }
 
     getCounters(userId = null): Observable<any>{
+        console.log("entrando al metodo getCounters de user.service.ts")
         let headers = new HttpHeaders().set('Content-Type','application/json')
                                        .set('Authorization',this.gettoken());
 

@@ -2,7 +2,7 @@
 .h1-strong{
     font-size: 35px;
     font-weight: bold;
-    margin-left: 13px;
+    /*margin-left: 13px;*/
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
@@ -69,7 +69,9 @@
     text-align:center;
 }
 
-.user-item .user-image{
+/*GENTE*/
+.user-item .user-image,
+.publication-item .user-image{
     width: 75px;
     height: 75px;
     border-radius :100px;
@@ -77,12 +79,14 @@
     margin-right: 15px;
 }
 
-.user-item .user-image img{
+.user-item .user-image img,
+.publication-item .user-image img{
     height: auto;
     width: 75px;
 }
 
-.user-item .user-name{
+.user-item .user-name,
+.publication-item .user-name{
     margin-top: 11px;
 }
 
@@ -106,3 +110,96 @@
 .avatar-default{
     width: 100% !important;
 }
+
+/*SIDEBAR*/
+.sidebar-32{
+    width: 32%;
+    padding: 0px!important;
+}
+
+#user-card, #new-publication{ /*cuando se pone , entre 2 valores es por que comparten un mismo estilo*/
+    padding: 25px;
+    width: 32%;
+}
+
+#new-publication{
+    padding: 25px;
+    padding-left:8px;
+}
+
+#user-card .avatar{
+    width: 75px;
+    height: 75px;
+    border-radius :100px;
+    overflow: hidden; /*para ocultar lo sobrante*/
+    margin-right: 15px;
+}
+
+#user-card .avatar img{
+    width:100%;
+}
+
+#user-card .name-surname{
+    font-weight: bold;
+    font-size: 17px;
+}
+
+#user-card .name-surname a{
+    color: #000000;
+}
+
+#user-card .name-surname .nickname{
+    color: #969393;
+}
+
+#user-card .stats{
+    margin-top: 10px;
+    border-top: 1px solid #eeeeee;
+}
+
+#user-card .stats a{
+    text-decoration: none;
+}
+
+#user-card .stats a:hover .number-stats{
+    color: red;
+}
+
+#user-card .label-stats,
+#user-card .number-stats{
+    display: block; /*para que lo muestre en forma de bloques (enters)*/
+    text-align: center;
+    transition: all 300ms;
+}
+
+#user-card .label-stats{
+    font-weight: bold;
+    color: #000000;
+}
+
+#user-card .number-stats{
+    font-weight: bold;
+    color: green;
+}
+
+#user-card .following-data{
+    float: left;
+    padding-left:18px;
+    padding-right:18px;
+    margin-top: 10px;
+    border-right: 2px solid #eeeeee;
+}
+
+#user-card .following-data:last-child{
+    border: none; /*para quitar la ultima linea vertical para que se vea mejor*/
+}
+
+#user-card .following-data:first-child{
+    padding-left: 6px;
+}
+
+/*TIMELINE*/
+#publications{
+    min-height: 500px;
+}
+

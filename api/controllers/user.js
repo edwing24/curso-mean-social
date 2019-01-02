@@ -239,23 +239,28 @@ function getCounter(req,res){
 }
 
 async function getCountFollow(user_id){
-    var following = await Follow.count({'user':user_id}).exec((err,count)=>{
+    console.log("entro a getcountfollow");
+    console.log("el valor de userId es: " + user_id)
+
+
+    var following = await Follow.count({'user': user_id}, function(err,count){
         if(err) return handleError(err);
 
         return count;
     });
 
-    var followed = await Follow.count({'followed':user_id}).exec((err,count)=>{
+    var followed = await Follow.count({'followed': user_id}, function(err,count){
         if(err) return handleError(err);
 
         return count;
     });
 
-    var publications = await Publication.count({'user':user_id}).exec((err,count)=>{
+    var publications = await Publication.count({'user': user_id}, function(err,count){
         if(err) return handleError(err);
 
         return count;
     });
+
 
     return {
         following: following,
