@@ -35,8 +35,8 @@ export class TimelineComponent implements OnInit{
     }
 
     ngOnInit(){
-        console.log('timeline.component cargado correctamente');
-        //this.getPublications(this.page);
+        console.log('publications.component cargado correctamente');
+        this.getPublications(this.page);
     }
 
     getPublications(page,adding=false){
@@ -87,6 +87,10 @@ export class TimelineComponent implements OnInit{
         }
 
         this.getPublications(this.page,true);
+    }
+
+    refresh(event){
+        this.getPublications(1);
     }
 
 

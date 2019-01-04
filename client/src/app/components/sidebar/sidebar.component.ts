@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { GLOBAL } from '../../services/global';
 import { Publication} from '../../models/publication';
 import { PublicationService } from '../../services/publication.service';
+import { setTNodeAndViewData } from '@angular/core/src/render3/state';
 
 
 @Component({
@@ -56,4 +57,14 @@ export class SidebarComponent implements OnInit{
             }
         );
     }
+
+    // Output
+    @Output() sended = new EventEmitter(); //se usa en el component padre timeline.component.html en la etiqueta sidebar
+    sendPublication(event){
+        console.log("entro al metodo : sendPublication")
+        console.log(event);
+        this.sended.emit({send:'true'});
+    }
+
+
 }

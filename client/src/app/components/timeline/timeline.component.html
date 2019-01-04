@@ -1,7 +1,37 @@
 <div class="col-lg-8">
-    <h1 class="h1-strong">{{title}}</h1>
-    <publications></publications>
+    <h1 class="h1-strong">{{title}}
+        <button class="btn btn-primary pull-right" (click)="refresh($event)">Nuevas Publicaciones</button>
+    </h1>
+    <div id="publications">
+        <div *ngFor="let publication of publications" class="publication-item">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="user-image pull-left">
+                        <a href="#">
+                            <img src="{{url + 'get-image-user/' + publication.user.image}}" *ngIf="publication.user.image"/> <!-- si hay imagen la muestra sino muestra una por defecto de la carpeta assets-->
+                            <img src="assets/user.png" class="avatar-default" *ngIf="!publication.user.image"/>
+                        </a>
+                    </div>
+                    <span class="user-name">
+                        {{ publication.user.name + ' ' + publication.user.surname }}
+                    </span>
+                    &nbsp;|&nbsp; <!-- espacios en blanco-->
+                    <span class="date">
+                            {{ (publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }} <!--amFromUnix (formatea el timestamp para que sea amigable al usuario, | amLocale:'es' convierte el texto en español, | amTimeAgo nos indica que cantidad de tiempo ha transcurrido-->
+                    </span>
+                    <h4 class="publication-text pull-left">
+                        {{ publication.text }}
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 text-center">
+                <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+                        Ver más publicaciones
+                    </button>
+            </div>
+    </div>
 </div>
-<sidebar></sidebar>
+<sidebar (sended)="refresh($event)"></sidebar>
 
 <div class="clearfix"></div>
