@@ -9,12 +9,12 @@ declare var $: any; //para usar jquery solo es necesario agregar esto o este imp
 //https://medium.com/@swarnakishore/how-to-include-and-use-jquery-in-angular-cli-project-592e0fe63176
 
 @Component({
-    selector:'timeline',
-    templateUrl:'timeline.component.html',
+    selector:'publications',
+    templateUrl:'publications.component.html',
     providers:[PublicationService]
 })
 
-export class TimelineComponent implements OnInit{
+export class PublicationsComponent implements OnInit{
     public identity;
     public token;
     public title:string;
@@ -27,7 +27,7 @@ export class TimelineComponent implements OnInit{
     public publications: Publication[];
 
     constructor(private _route:ActivatedRoute, private _router:Router,private _userService: UserService, private _publicationService: PublicationService){
-        this.title="Timeline";
+        this.title="Publications";
         this.identity = this._userService.getIdentity();
         this.token = this._userService.gettoken();
         this.url = GLOBAL.url;
@@ -35,8 +35,8 @@ export class TimelineComponent implements OnInit{
     }
 
     ngOnInit(){
-        console.log('timeline.component cargado correctamente');
-        //this.getPublications(this.page);
+        console.log('publications.component cargado correctamente');
+        this.getPublications(this.page);
     }
 
     getPublications(page,adding=false){

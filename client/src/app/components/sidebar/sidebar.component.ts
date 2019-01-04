@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { GLOBAL } from '../../services/global';
 import { Publication} from '../../models/publication';
 import { PublicationService } from '../../services/publication.service';
+
 
 @Component({
     selector: 'sidebar',
@@ -18,7 +20,7 @@ export class SidebarComponent implements OnInit{
     public status;
     public publication: Publication;
 
-    constructor(private _userService: UserService, private _publicationService:PublicationService){
+    constructor(private _userService: UserService, private _publicationService:PublicationService, private _route: ActivatedRoute, private _router:  Router){
         this.identity = this._userService.getIdentity();
         this.token = this._userService.gettoken();
         console.log("constructor sidebar");
@@ -40,6 +42,7 @@ export class SidebarComponent implements OnInit{
                     //this.publication = response.publication;
                     this.status = "success";
                     form.reset();
+                    this._router.navigate(['/timeline']); //cuando guardemos redireccionamos a timeline para actualizar los datos
                 }else{
                     this.status = "error";
                 }

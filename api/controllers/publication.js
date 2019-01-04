@@ -51,6 +51,9 @@ function getPublications(req,res){
             follows_clean.push(follow.followed);
         });
 
+        //esta linea sirve para agregar igual nuestro usuario para que busque publicaciones nuestras en el .find
+        follows_clean.push(req.user.sub);
+
     //'$in' nos sirve para que se busque dentro de un json de datos
     Publication.find({user:{'$in':follows_clean}}).sort('-created_at').populate('user').paginate(page,itemsPerPage,(err,publications,total)=>{
         if(err) return res.status(500).send({message:'Error al devolver publicaciones'});
@@ -61,7 +64,8 @@ function getPublications(req,res){
             total_items:total,
             publications,
             pages: Math.ceil(total/itemsPerPage),
-            total
+            page:page,
+            items_per_page:itemsPerPage
         });
     });
     });
