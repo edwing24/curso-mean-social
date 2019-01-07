@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="user-image pull-left">
-                        <a href="#">
+                        <a [routerLink]="['/perfil',user._id]">
                             <img src="{{url + 'get-image-user/' + user.image}}" *ngIf="user.image"/> <!-- si hay imagen la muestra sino muestra una por defecto de la carpeta assets-->
 
                             <img src="assets/user.png" class="avatar-default" *ngIf="!user.image"/>
@@ -15,7 +15,7 @@
                     </div>
                     <div class="user-name pull-left">
                         <p>
-                            <a href="#">
+                            <a [routerLink]="['/perfil',user._id]">
                                 {{user.name + ' ' + user.surname}}
                             </a>
                         </p>

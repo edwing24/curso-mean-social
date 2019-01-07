@@ -100,7 +100,7 @@ if(err) return res.status(404).send("El usuario no se pudo identificar");
 }
 
 //conseguir los datos del usuario
-function getUser(req,user){
+function getUser(req,res){
     var userId = req.params.id;
 
     User.findById(userId,(err,user)=>{
@@ -126,21 +126,33 @@ function getUser(req,user){
 //dentro de call backs anidados
 async function followThisUser(identity_user_id, user_id){ //identity_user_id es el usuario autenticado (yo), user_id es el usuario por la url
     //following es si yo sigo a este usuario (siguiendo)
-    var following = await Follow.findOne({'user':identity_user_id,'followed':user_id}).exec((err,follow)=>{
-        if(err) return handleError(err);
-        return follow;
-    });
+    try{
+        var following = await Follow.findOne({'user':identity_user_id,'followed':user_id}).exec()
+        .then((follow)=>{
+            return follow;
+        })
+        .catch((err)=>{
+            return handleError(err);
+        });
 
-    //si este usuario me sigue a mi
-    var followed = await Follow.findOne({'user':user_id,'followed':identity_user_id}).exec((err,follow)=>{
-        if(err) return handleError(err);
-        return follow;
-    });
+        //si este usuario me sigue a mi
+        var followed = await Follow.findOne({'user':user_id,'followed':identity_user_id}).exec()
+        .then((follow)=>{
+            return follow;
+        })
+        .catch((err)=>{
+            return handleError(err);
+        });
+        
 
-    return {
-        following:following,
-        followed:followed
-    }
+        return {
+            following:following,
+            followed:followed
+        }
+        }catch(e){
+            console.log(e);
+        }
+
 }
 
 

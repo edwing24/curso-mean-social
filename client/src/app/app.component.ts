@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, DoCheck { // implementamos OnInit y
     private _router:Router,
     private _userService:UserService
   ){
-    this.title="YUKINDIE";
+    this.title="SOCIAL RED";
     this.url = GLOBAL.url;
   }
 
