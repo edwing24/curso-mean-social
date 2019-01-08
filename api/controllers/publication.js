@@ -79,8 +79,13 @@ function getPublicationsUser(req,res){
 
     var itemsPerPage=4;
 
+    var user = req.user.sub;
+    if(req.params.user){
+        user = req.params.user
+    }
+
     //'$in' nos sirve para que se busque dentro de un json de datos
-    Publication.find({user:req.user.sub }).sort('-created_at').populate('user').paginate(page,itemsPerPage,(err,publications,total)=>{
+    Publication.find({user:user }).sort('-created_at').populate('user').paginate(page,itemsPerPage,(err,publications,total)=>{
         if(err) return res.status(500).send({message:'Error al devolver publicaciones'});
 
         if(!publications) return res.status(404).send({message:'no hay publicaciones'});
@@ -191,5 +196,6 @@ module.exports={
     getPublication,
     deletePublication,
     uploadImage,
-    getImageFile
+    getImageFile,
+    getPublicationsUser
 }
