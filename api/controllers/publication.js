@@ -178,7 +178,7 @@ function removeFileOfUploads(res,file_path,message){
     }); //eliminar archivo subido
 };
 
-function getImageFile(re,res){
+function getImageFile(req,res){
     var image_file = req.params.imageFile;
     var path_file = './uploads/publications/' + image_file;
     

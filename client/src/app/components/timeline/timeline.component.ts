@@ -25,6 +25,7 @@ export class TimelineComponent implements OnInit{
     private pages;
     private itemsPerPage;
     public publications: Publication[];
+    public showImage;
 
     constructor(private _route:ActivatedRoute, private _router:Router,private _userService: UserService, private _publicationService: PublicationService){
         this.title="Timeline";
@@ -90,6 +91,14 @@ export class TimelineComponent implements OnInit{
 
     refresh(event){
         this.getPublications(1);
+    }
+
+    showThisImage(id){
+        this.showImage = id;
+    }
+
+    hideThisImage(id){
+        this.showImage = 0;
     }
 
 
