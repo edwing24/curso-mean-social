@@ -12,9 +12,9 @@
                             <img src="assets/user.png" class="avatar-default" *ngIf="!publication.user.image"/>
                         </a>
                     </div>
-                    <span class="user-name">
+                    <a [routerLink]="['/perfil',publication.user._id]" class="user-name">
                         {{ publication.user.name + ' ' + publication.user.surname }}
-                    </span>
+                    </a>
                     &nbsp;|&nbsp; <!-- espacios en blanco-->
                     <span class="date">
                             {{ (publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }} <!--amFromUnix (formatea el timestamp para que sea amigable al usuario, | amLocale:'es' convierte el texto en español, | amTimeAgo nos indica que cantidad de tiempo ha transcurrido-->

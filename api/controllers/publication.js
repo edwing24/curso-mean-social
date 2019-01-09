@@ -21,7 +21,7 @@ function savePublication(req,res){
     var publication = new Publication();
 
     publication.text = params.text;
-    publication.file = params.file;
+    publication.file = null;//params.file;
     publication.user = req.user.sub;
     publication.created_at = moment().unix();
 
@@ -128,30 +128,33 @@ function deletePublication(req,res){
 //subir archivos de imagen/avatar de usuario
 function uploadImage(req,res){
     var publicationId = req.params.id;
-    var update = red.body;
+    var update = req.body;
 
     //borrar la propiedad password
     delete update.password;
 
     if(req.files){
         var file_path = req.files.image.path;
+        console.log("var_file_path: "+ file_path);
         var file_split = file_path.split('\\');
         var file_name = file_split[2]; //para tomar el nombre uploads/users/imagen.jpg
         var ext_split = file_name.split('\.'); 
         var file_ext = ext_split[1]; //imagen.jpg
+        console.log("var file_ext: "+ file_ext);
 
-
-        if(file_ext=='png' || file_ext=='jpg' || file_ext == 'jpeg', file_ext=='gif'){
-
+        if(file_ext=='png' || file_ext=='jpg' || file_ext == 'jpeg' || file_ext=='gif'){
+            console.log("Actualizar imagen: req.user.sub=: " + req.user.sub);
+            console.log("Actualizar imagen: publicationId=: " + publicationId);
             Publication.findOne({'user':req.user.sub,'_id':publicationId}).exec((err,publication)=>{
                 if(publication)
                 {
                     //actualizar doucumento de publicacion
-                    Publication.findOneAndUpdate(publicationId,{file: file_name},{new:true},(err,publicationUpdated)=>{
+                    Publication.findOneAndUpdate({"_id":publicationId},{file: file_name},{new:true},(err,publicationUpdated)=>{
                         if(err) return res.status(500).send({message:"Error en la petición"});
 
-                        if(!userUpdated) return res.status(404).send({messsage:'No se ha podido actualizar la iamgen de la publicación'});
+                        if(!publicationUpdated) return res.status(404).send({messsage:'No se ha podido actualizar la iamgen de la publicación'});
                 
+                        console.log("resultado a devolver: " + publicationUpdated);
                         return res.status(200).send({publication: publicationUpdated});
                     });
                 }else{

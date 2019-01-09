@@ -8,7 +8,7 @@
         <img src="assets/user.png" *ngIf="!identity.image">
     </div>
     <div class="name-surname pull-left">
-        <a href="=#" clas=username>
+        <a [routerLink]="['/perfil',identity._id]" class="username">
             {{ identity.name + ' ' + identity.surname }}
         </a>
         <p class="nickname">{{ identity.nick }}</p>
@@ -70,7 +70,7 @@
         </p>
         <p>
             <label>Sube tu foto</label>
-            <input type="file" placeholder="Subir imagen">
+            <input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)">
         </p>
         <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPubForm.form.valid">
     </form>
