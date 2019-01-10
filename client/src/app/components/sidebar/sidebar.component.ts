@@ -42,13 +42,14 @@ export class SidebarComponent implements OnInit{
         this.filesToUpload = <Array<File>>fileInput.target.files;
     }
 
-    onSubmit(form){
+    onSubmit(form,$event){
         console.log(this.publication);
         this._publicationService.addPublication(this.token,this.publication).subscribe(
             response => {
                 if(response.publication){
                     //this.publication = response.publication;
 
+                    if(this.filesToUpload && this.filesToUpload.length){
                     //subir imagen
                     this._uploadService.makeFileRequest(this.url+'upload-image-pub/'+response.publication._id,[],this.filesToUpload,this.token,'image')
                                        .then((result:any)=>{
@@ -58,7 +59,15 @@ export class SidebarComponent implements OnInit{
                                             this.status = "success";
                                             form.reset();
                                             this._router.navigate(['/timeline']); //cuando guardemos redireccionamos a timeline para actualizar los datos
+                                            this.sended.emit({send:'true'});
                                        });
+                    }
+                    else{
+                        this.status = "success";
+                        form.reset();
+                        this._router.navigate(['/timeline']); //cuando guardemos redireccionamos a timeline para actualizar los datos
+                        this.sended.emit({send:'true'});
+                    }
                 }else{
                     this.status = "error";
                 }
